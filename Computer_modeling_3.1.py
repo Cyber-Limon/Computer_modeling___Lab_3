@@ -1,5 +1,6 @@
 import math
 import random
+import matplotlib.pyplot as plt
 
 
 
@@ -10,17 +11,17 @@ N = int(input("- число итераций: N = "))
 
 
 def lambda_func(t):
-    if t < 7:
+    if t < 8:
         return 1
 
-    elif 7 <= t < 12:
-        return 5
+    elif 8 <= t < 12:
+        return 10
 
     elif 12 <= t < 14:
         return 20
 
     elif 14 <= t < 18:
-        return 7
+        return 10
 
     elif t >= 18:
         return 15
@@ -38,7 +39,7 @@ def poisson(t, l = 100):
 
 
 
-def exponential(l = 10):
+def exponential(l = 20):
     U = random.random()
     X = -1 / l * math.log(U)
 
@@ -151,6 +152,24 @@ for iteration in range(N):
     W_T[iteration] /= len(A)
     Q_T[iteration]  = integral(M) / T
     p_T[iteration]  = integral(B) / T
+
+
+
+    if iteration == 0:
+        plt.step([p[1] for p in M], [p[0] for p in M], where='post')
+        plt.axhline(0,  color='r')
+        plt.show()
+
+
+
+        s = 0
+        for i in range(len(A)):
+            s += D[i] - A[i]
+        s = s / len(A)
+
+        print("\n\n\nВерификация: ")
+        print(f"- среднее время:           {s}")
+        print(f"- среднее время программы: {S_T[iteration]}")
 
 
 
