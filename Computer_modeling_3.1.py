@@ -4,31 +4,25 @@ import matplotlib.pyplot as plt
 
 
 
-print("Введите:")
-T = int(input("- время работы:   T = "))
-N = int(input("- число итераций: N = "))
-
-
-
 def lambda_func(t):
     if t < 8:
-        return 1
+        return 0
 
     elif 8 <= t < 12:
         return 10
 
     elif 12 <= t < 14:
-        return 20
+        return 40
 
     elif 14 <= t < 18:
-        return 10
+        return 20
 
-    elif t >= 18:
-        return 15
+    elif 18 <= t:
+        return 30
 
 
 
-def poisson(t, l = 100):
+def poisson(t, l = 40):
     while True:
         U1 = random.random()
         t  = t - 1 / l * math.log(U1)
@@ -39,7 +33,7 @@ def poisson(t, l = 100):
 
 
 
-def exponential(l = 20):
+def exponential(l = 40):
     U = random.random()
     X = -1 / l * math.log(U)
 
@@ -61,6 +55,12 @@ def integral(X):
 
 
 
+print("Введите:")
+T = int(input("- время работы:   T = "))
+N = int(input("- число итераций: N = "))
+
+
+
 T_p = []
 S_T = [0 for _ in range(N)]
 W_T = [0 for _ in range(N)]
@@ -76,8 +76,10 @@ for iteration in range(N):
 
     t = N_A = N_D = n = 0
 
-    T_0      = poisson(0)
+    T_0      = poisson(t)
     t_A, t_D = T_0, math.inf
+
+    M.append((0, t))
     B.append((0, t))
 
 
@@ -136,7 +138,7 @@ for iteration in range(N):
         # Случай 4
         elif min(t_A, t_D) > T and n == 0:
             T_p.append(max(t - T, 0))
-            M.append((n, t))
+            M.append((0, t))
             B.append((0, t))
             break
 
